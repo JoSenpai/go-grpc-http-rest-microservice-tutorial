@@ -1,4 +1,4 @@
-package v1
+package v55
 
 import (
 	"context"
@@ -21,7 +21,7 @@ type toDoServiceServer struct {
 	db *sql.DB
 }
 
-func NewToDoServiceServerrr(db *sql.DB) v1.ToDoServiceServer {
+func NewToDoServiceServer(db *sql.DB) v1.ToDoServiceServer {
 	return &toDoServiceServer{db: db}
 }
 
