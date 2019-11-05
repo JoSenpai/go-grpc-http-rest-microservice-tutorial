@@ -21,7 +21,7 @@ type toDoServiceServer struct {
 	db *sql.DB
 }
 
-func NewToDoServiceServer(db *sql.DB) v1.ToDoServiceServer {
+func NewToDoServiceServerrr(db *sql.DB) v1.ToDoServiceServer {
 	return &toDoServiceServer{db: db}
 }
 
