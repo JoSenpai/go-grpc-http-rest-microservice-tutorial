@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/golang/protobuf/ptypes"
@@ -118,7 +119,7 @@ func (s *toDoServiceServer) Create(ctx context.Context, req *v1.CreateRequest) (
 	}
 
 	//insert ToDo entity data
-	res, err := c.ExecContext(ctx, "INSERT INTO ToDO(`Title`, `Description`, `Reminder`) VA:IES (?,?,?)", req.ToDo.Title, req.ToDo.Description, reminder)
+	res, err := c.ExecContext(ctx, "INSERT INTO ToDO(`Title`, `Description`, `Reminder`) VALUES (?,?,?)", req.ToDo.Title, req.ToDo.Description, reminder)
 
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to insert into todo, err: "+err.Error())
@@ -167,6 +168,8 @@ func (s *toDoServiceServer) Update(ctx context.Context, req *v1.UpdateRequest) (
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to retrieves rows affeted values -> "+err.Error())
 	}
+
+	log.Printf("Number of rows affected: %v", rows)
 
 	if rows == 0 {
 		return nil, status.Error(codes.NotFound, fmt.Sprintf("ToDo with ID='%d' is not found",
