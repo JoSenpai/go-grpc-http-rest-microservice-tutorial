@@ -172,8 +172,8 @@ func (s *toDoServiceServer) Update(ctx context.Context, req *v1.UpdateRequest) (
 	log.Printf("Number of rows affected: %v", rows)
 
 	if rows == 0 {
-		return nil, status.Error(codes.NotFound, fmt.Sprintf("ToDo with ID='%d' is not found",
-			req.ToDo.Id))
+		return nil, status.Error(codes.NotFound, fmt.Sprintf("ToDo with ID='%d' is not found, rows not found: %v",
+			req.ToDo.Id, rows))
 	}
 
 	return &v1.UpdateResponse{
