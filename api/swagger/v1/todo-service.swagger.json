@@ -54,6 +54,7 @@
     },
     "/v1/todo/all": {
       "get": {
+        "summary": "Read all todo tasks",
         "operationId": "ReadAll",
         "responses": {
           "200": {
