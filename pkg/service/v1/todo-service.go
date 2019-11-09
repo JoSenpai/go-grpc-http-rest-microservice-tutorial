@@ -227,7 +227,7 @@ func (s *toDoServiceServer) ReadAll(ctx context.Context, req *v1.ReadAllRequest)
 	defer c.Close()
 
 	//get ToDo lists
-	rows, err := c.QueryContext(ctx, "SELET `ID`, `Title`,s `Description`, `Reminder` FROM ToDo")
+	rows, err := c.QueryContext(ctx, "SELET `ID`, `Title`, `Description`, `Reminder` FROM ToDo")
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from ToDo->"+err.Error())
 	}
