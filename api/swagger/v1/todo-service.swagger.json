@@ -1,0 +1,341 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ToDo service",
+    "version": "1.0",
+    "contact": {
+      "name": "go-grpc-http-rest-microservice-tutorial project",
+      "url": "https://github.com/josenpai/go-grpc-http-rest-microservice-tutorial",
+      "email": "jonathanyong16@gmail.com"
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/todo": {
+      "get": {
+        "operationId": "ReadAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ReadAllResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "api",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      },
+      "post": {
+        "operationId": "Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    },
+    "/v1/todo/{id}": {
+      "get": {
+        "operationId": "Read",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ReadResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "api",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      },
+      "delete": {
+        "operationId": "Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "api",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    },
+    "/v1/todo/{toDo.id}": {
+      "put": {
+        "operationId": "Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "toDo.id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      },
+      "patch": {
+        "operationId": "Update2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "toDo.id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "v1CreateRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "toDo": {
+          "$ref": "#/definitions/v1ToDo"
+        }
+      }
+    },
+    "v1CreateResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1ReadAllResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "toDos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ToDo"
+          }
+        }
+      }
+    },
+    "v1ReadResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "toDo": {
+          "$ref": "#/definitions/v1ToDo"
+        }
+      }
+    },
+    "v1ToDo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "reminder": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "v1UpdateRequest": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "toDo": {
+          "$ref": "#/definitions/v1ToDo"
+        }
+      }
+    },
+    "v1UpdateResponse": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    }
+  }
+}
