@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -20,19 +21,19 @@ func main() {
 
 	var body string
 
-	// Call create
+	// Call Create
 	resp, err := http.Post(*address+"/v1/todo", "application/json", strings.NewReader(fmt.Sprintf(`
-	{
-		"api": "v1",
-		"toDo" {
-			"title": "title (%s)",
-			"description": "description (%s)",
-			"reminder": "%s"
+		{
+			"api":"v1",
+			"toDo": {
+				"title":"title (%s)",
+				"description":"description (%s)",
+				"reminder":"%s"
+			}
 		}
-	}
 	`, pfx, pfx, pfx)))
 	if err != nil {
-		log.Fatalf("failed to call Create method :%v", err)
+		log.Fatalf("failed to call Create method: %v", err)
 	}
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
@@ -49,10 +50,10 @@ func main() {
 		ID  string `json:"id"`
 	}
 
-	err = json.Unmarshala(bodyBytes, &created)
+	err = json.Unmarshal(bodyBytes, &created)
 	if err != nil {
 		log.Fatalf("failed to unmarshal JSON response of Create method: %v", err)
-		fmt.Println("Error:".err)
+		fmt.Println("Error: %v", err)
 	}
 
 	// Call Read
@@ -73,14 +74,14 @@ func main() {
 	req, err := http.NewRequest("PUT", fmt.Sprintf("%s%s/%s", *address, "/v1/todo", created.ID),
 		strings.NewReader(fmt.Sprintf(`
 		{
-			"api": "v1",
+			"api":"v1",
 			"toDo": {
-				"title": "title (%s) + updated",
-				"description": "description (%s) + updated",
-				"reminder": "%s"
+				"title":"title (%s) + updated",
+				"description":"description + updated",
+				"reminder":"%s"
 			}
 		}
-	`, pfx, pfx, pfx)))
+	`, pfx, pfx)))
 	req.Header.Set("Content-Type", "application/json")
 	resp, err = http.DefaultClient.Do(req)
 	if err != nil {

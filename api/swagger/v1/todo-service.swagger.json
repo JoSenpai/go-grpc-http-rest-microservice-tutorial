@@ -20,35 +20,6 @@
   ],
   "paths": {
     "/v1/todo": {
-      "get": {
-        "operationId": "ReadAll",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ReadAllResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "api",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ToDoService"
-        ]
-      },
       "post": {
         "operationId": "Create",
         "responses": {
@@ -74,6 +45,37 @@
             "schema": {
               "$ref": "#/definitions/v1CreateRequest"
             }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    },
+    "/v1/todo/all": {
+      "get": {
+        "operationId": "ReadAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ReadAllResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "api",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [

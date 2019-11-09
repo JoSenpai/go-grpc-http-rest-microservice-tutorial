@@ -40,7 +40,7 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 		_, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel()
 
-		_ = server.ShutDown(ctx)
+		_ = server.Shutdown(ctx)
 	}()
 
 	log.Println("starting HTTP/REST gateway...")
