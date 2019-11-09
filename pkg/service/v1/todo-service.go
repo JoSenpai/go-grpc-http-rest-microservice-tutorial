@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/golang/protobuf/ptypes"
@@ -167,13 +166,6 @@ func (s *toDoServiceServer) Update(ctx context.Context, req *v1.UpdateRequest) (
 	rows, err := res.RowsAffected()
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to retrieves rows affeted values -> "+err.Error())
-	}
-
-	log.Printf("Number of rows affected: %v", rows)
-
-	if rows == 0 {
-		return nil, status.Error(codes.NotFound, fmt.Sprintf("ToDo with ID='%d' is not found, rows not found: %v",
-			req.ToDo.Id, rows))
 	}
 
 	return &v1.UpdateResponse{
