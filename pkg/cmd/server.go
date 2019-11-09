@@ -9,6 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/josenpai/go-grpc-http-rest-microservice-tutorial/pkg/protocol/grpc"
+	"github.com/josenpai/go-grpc-http-rest-microservice-tutorial/pkg/protocol/rest"
 	v1 "github.com/josenpai/go-grpc-http-rest-microservice-tutorial/pkg/service/v1"
 )
 
@@ -16,6 +17,10 @@ type Config struct {
 	// gRPC server start parameters section
 	// gRPC is TCP
 	GRPCPort string
+
+	// HTTP/REST gateway start parameters section
+	// HTTPPort is TCP port to listen by HTTP/REST gateway
+	HTTPPort string
 
 	// DB Datastore parameters section
 	// DatastoreDBHost is host of database
@@ -65,6 +70,11 @@ func RunServer() error {
 	defer db.Close()
 
 	v1API := v1.NewToDoServiceServer(db)
+
+	// run the HTTP gateway
+	go func() {
+		_ = rest.RunServer(ctx, cfg.GRPCPort, cfg.HTTPPort)
+	}()
 
 	return grpc.RunServer(ctx, v1API, cfg.GRPCPort)
 }

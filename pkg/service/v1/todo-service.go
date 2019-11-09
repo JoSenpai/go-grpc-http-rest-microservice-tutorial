@@ -227,7 +227,7 @@ func (s *toDoServiceServer) ReadAll(ctx context.Context, req *v1.ReadAllRequest)
 	defer c.Close()
 
 	//get ToDo lists
-	rows, err := c.QueryContext(ctx, "SELET `ID`, `Title`, `Description`, `Reminder` FROM ToDo")
+	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Reminder` FROM ToDo")
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from ToDo->"+err.Error())
 	}
@@ -237,7 +237,7 @@ func (s *toDoServiceServer) ReadAll(ctx context.Context, req *v1.ReadAllRequest)
 	list := []*v1.ToDo{}
 	for rows.Next() {
 		td := new(v1.ToDo)
-		if err := rows.Scan(&td.Id, &td.Description, &reminder); err != nil {
+		if err := rows.Scan(&td.Id, &td.Title, &td.Description, &reminder); err != nil {
 			return nil, status.Error(codes.Unknown, "failed to retrieve field values from ToDo row-> "+err.Error())
 		}
 		td.Reminder, err = ptypes.TimestampProto(reminder)
